@@ -1,0 +1,8 @@
+#フォルダ
+/.vs
+/Release
+/Debug
+/x64
+
+#拡張子
+*.cso
