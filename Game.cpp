@@ -36,11 +36,9 @@ bool Game::Init()
     Time::Init();
 
     
- //   m_currentScene = new Scene_Test_o3u;
-  //  m_currentScene = new Scene_Title_o3u;
-  //  m_currentScene = new Scene_Test;
-//    m_currentScene = new Scene_None;
-    m_currentScene = new Scene_Edit_o3u;
+
+    m_currentScene = new Scene_Title_o3u;
+
     m_currentScene->CreateGameObject();
 
 

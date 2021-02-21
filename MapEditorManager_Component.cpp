@@ -420,17 +420,6 @@ void MapEditorManager_Component::DrawImgui()
 					isReload = true;
 				}
 
-				//SliderControllPoints
-				if (notes[notecnt].type == NOTE_OBJECT::SLIDER)
-				{
-					if (ImGui::Button("AddCP"))
-					{
-						notes[notecnt].Positions.push_back({ 0, 0, 0 });
-						notes[notecnt].CpNum++;
-						isReload = true;
-					}
-				}
-
 				//Position
 				for (size_t idx = 0; idx < notes[notecnt].Positions.size(); idx++)
 				{
@@ -503,10 +492,25 @@ void MapEditorManager_Component::DrawImgui()
 
 				}
 
+				//SliderControllPoints
+				if (notes[notecnt].type == NOTE_OBJECT::SLIDER)
+				{
+					if (ImGui::Button("AddCP"))
+					{
+						notes[notecnt].Positions.push_back({ 0, 0, 0 });
+						notes[notecnt].CpNum++;
+						isReload = true;
+					}
+				}
+
+				ImGui::SameLine();
+
 				//delete
 				if (ImGui::Button("Delete Note"))
 				{
 					notes.erase(notes.begin() + notecnt);
+					openIdx = std::min((int)notes.size() - 1, openIdx);
+
 					isReload = true;
 					ImGui::TreePop();
 					m_selectpos = 0;
@@ -539,7 +543,7 @@ void MapEditorManager_Component::DrawImgui()
 		if (!camera->GetOwnGameObject()) return;
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-
+		m_selectpos = std::min(m_selectpos, (int)notes[openIdx].Positions.size() - 1);
 		D3DXVECTOR3& pos = notes[openIdx].Positions[m_selectpos];
 		static float rot[3] = {};
 		static float scl[3] = { 1,1,1 };
